@@ -1,34 +1,32 @@
-<p id="notice"><%= notice %></p>
+<h1 class="text-center"><%= @company.name %></h1>
+<table class="table table-striped">
+  <tr>
+    <td><strong>Name:</strong></td>
+    <td> <%= @company.name %></td>
+  </tr>
+  <tr>
+    <td><strong>License number:</strong></td>
+    <td> <%= @company.license_number %></td>
+  </tr>
+  <tr>
+    <td><strong>Started at:</strong></td>
+    <td> <%= @company.started_at %></td>
+  </tr>
+  <tr>
+    <td><strong>Founder name:</strong></td>
+    <td> <%= @company.founder_name %></td>
+  </tr>
+  <tr>
+    <td><strong>Phone:</strong></td>
+    <td> <%= @company.contact %></td>
+  </tr>
+  <tr>
+    <td><strong>Address:</strong></td>
+    <td> <%= @company.address %></td>
+  </tr>
+</table>
 
-<p>
-  <strong>Name:</strong>
-  <%= @company.name %>
-</p>
-
-<p>
-  <strong>License number:</strong>
-  <%= @company.license_number %>
-</p>
-
-<p>
-  <strong>Started at:</strong>
-  <%= @company.started_at %>
-</p>
-
-<p>
-  <strong>Founder name:</strong>
-  <%= @company.founder_name %>
-</p>
-
-<p>
-  <strong>Contact:</strong>
-  <%= @company.contact %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @company.address %>
-</p>
-
-<%= link_to 'Edit', edit_company_path(@company) %> |
-<%= link_to 'Back', companies_path %>
+<% if current_user.has_admin_role? %>
+  <%= link_to 'Edit', edit_company_path(@company), class: 'btn btn-primary' %>
+<% end %>
+<%= link_to 'Back', root_path, class: 'btn btn-primary' %>

@@ -1,4 +1,4 @@
-<h1 class="text-center"><%= current_user.company.name %>[<%= link_to 'View Company Info', company_path(current_user.company)  %>]</h1>
+<h1 class="text-center"><%= link_to current_user.company.name, company_path(current_user.company) %></h1>
 <h1>Administrators</h1>
 
 <table class="table table-striped">

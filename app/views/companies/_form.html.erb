@@ -1,47 +1,37 @@
 <%= form_with(model: company, local: true) do |form| %>
-  <% if company.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(company.errors.count, "error") %> prohibited this company from being saved:</h2>
 
-      <ul>
-      <% company.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :name %>
-    <%= form.text_field :name, id: :company_name %>
+    <%= form.text_field :name, id: :company_name, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :license_number %>
-    <%= form.text_field :license_number, id: :company_license_number %>
+    <%= form.text_field :license_number, id: :company_license_number, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :started_at %>
-    <%= form.datetime_select :started_at, id: :company_started_at %>
+    <%= form.datetime_select :started_at, id: :company_started_at, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :founder_name %>
-    <%= form.text_field :founder_name, id: :company_founder_name %>
+    <%= form.text_field :founder_name, id: :company_founder_name, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :contact %>
-    <%= form.text_field :contact, id: :company_contact %>
+    <%= form.text_field :contact, id: :company_contact, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="field form-group">
     <%= form.label :address %>
-    <%= form.text_area :address, id: :company_address %>
+    <%= form.text_area :address, id: :company_address, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions mt-4 mb-5">
+    <%= form.submit 'Submit', class: 'btn btn-primary' %>
+    <%= link_to 'Cancel', company_path, class: 'btn btn-secondary' %>
   </div>
 <% end %>

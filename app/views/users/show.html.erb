@@ -27,7 +27,7 @@
     </tr>
     <tr>
       <td><strong>Company</strong></td>
-      <td><%= @user.company.name %></td>
+      <td><em><%= link_to "#{@user.company.name}", company_path(current_user.company) %></em></td>
     </tr>
     <tr>
       <td><strong>Department</strong></td>
