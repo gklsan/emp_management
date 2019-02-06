@@ -9,8 +9,44 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+  <div class="container">
+    <!-- Navigation -->
+    <div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
+        <div class="container">
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+              <% if user_signed_in? %>
+                <li class="nav-item"><%= link_to "Home".html_safe, root_path, class: "nav-link" %></li>
+<!--                <li class="nav-item"><%#= link_to "Upload CSV".html_safe, new_identifiers_path, class: "nav-link" %></li>-->
+                <li class="nav-item">
+                  <%= link_to "Logout".html_safe, destroy_user_session_path, method: :delete, class: "nav-link" %>
+                </li>
+                <li><p class="nav-link"><strong>User: </strong> <em><%= current_user.name %> </em></p></li>
+              <% else %>
+                <li class="nav-item"><%= link_to "Sign In", new_user_session_path, class: "nav-link"  %></li>
+                <li class="nav-item"><%= link_to "Sign Up", new_user_registration_path, class: "nav-link"  %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="container" style="padding-top: 4rem;">
+      <% unless flash.empty? %>
+        <% flash.each do |k, v| %>
+          <% flash_type = k == 'alert' ? 'danger' : 'success' %>
+          <div class="alert alert-<%= flash_type %> alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button> <%= v %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="container mt-4">
+      <%= yield %>
+    </div>
+
+
+  </div>
   </body>
 </html>

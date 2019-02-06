@@ -6,7 +6,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = current_user.company.users
+    @admins = User.with_role(:admin, current_user.company).preload(:roles)
+    @employees = User.with_role(:employee, current_user.company).preload(:roles)
   end
 
   # GET /users/1
@@ -26,14 +27,14 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-
+    @user = User.new(user_params.merge({password: '123456'}))
     respond_to do |format|
       if @user.save
+        @user.add_role(user_params[:role_type], current_user.company)
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :new }
+        format.html { render :new, notice: @user.errors.full_messages }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -44,6 +45,11 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
+        current_role = @user.roles_name.first
+        if current_role != user_params[:role_type]
+          @user.remove_role(current_role.to_sym, current_user.company)
+          @user.add_role(user_params[:role_type].to_sym, current_user.company)
+        end
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -71,7 +77,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :phone, :address, :salary, :bonus)
+      params.require(:user).permit(:name, :email, :phone, :address, :salary, :bonus, :role_type, :department_id, :company_id)
     end
 
     def verify_is_admin?

@@ -1,34 +1,42 @@
-<!--<p id="notice"><%#= notice %></p>-->
-<h1> Personal Profile </h1>
-<p>
-  <strong>Name:</strong>
-  <%= @user.name %>
-</p>
+<h1 class="text-center"> <%= @user.name %>'s Profile </h1>
+<div class="p-5">
+  <table class="table table-striped">
+    <tr>
+      <td><strong>Name:</strong></td>
+      <td> <%= @user.name %></td>
+    </tr>
+    <tr>
+      <td><strong>Email:</strong></td>
+      <td><%= @user.email %></td>
+    </tr>
+    <tr>
+      <td><strong>Phone:</strong></td>
+      <td><%= @user.phone %></td>
+    </tr>
+    <tr>
+      <td><strong>Address:</strong></td>
+      <td><%= @user.address %></td>
+    </tr>
+    <tr>
+      <td><strong>Salary:</strong></td>
+      <td><%= @user.salary %></td>
+    </tr>
+    <tr>
+      <td><strong>Bonus:</strong></td>
+      <td><%= @user.bonus %></td>
+    </tr>
+    <tr>
+      <td><strong>Company</strong></td>
+      <td><%= @user.company.name %></td>
+    </tr>
+    <tr>
+      <td><strong>Department</strong></td>
+      <td><%= @user.department.name %></td>
+    </tr>
+  </table>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @user.phone %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @user.address %>
-</p>
-
-<p>
-  <strong>Salary:</strong>
-  <%= @user.salary %>
-</p>
-
-<p>
-  <strong>Bonus:</strong>
-  <%= @user.bonus %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+  <%= link_to 'Edit Details', edit_user_path(@user), class: 'btn btn-primary' %>
+  <% if current_user.has_admin_role? %>
+    <%= link_to 'Back', users_path, class: 'btn btn-secondary' %>
+  <% end %>
+</div>

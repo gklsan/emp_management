@@ -1,0 +1,13 @@
+<tr>
+  <td><%= user.name %></td>
+  <td><%= user.email %></td>
+  <td><%= user.phone %></td>
+  <td><%= user.address %></td>
+  <td><%= user.salary %></td>
+  <td><%= user.bonus %></td>
+  <td class="btn-group" role="group" >
+    <%= link_to 'Show', user, class: 'btn btn-primary' %>
+    <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-secondary' %>
+    <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  </td>
+</tr>

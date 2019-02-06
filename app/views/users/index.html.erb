@@ -1,39 +1,25 @@
-<p id="notice"><%= notice %></p>
+<h1 class="text-center"><%= current_user.company.name %>[<%= link_to 'View Company Info', company_path(current_user.company)  %>]</h1>
+<h1>Administrators</h1>
 
-<h1>Users</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>Address</th>
-      <th>Salary</th>
-      <th>Bonus</th>
-      <th>company</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
+<table class="table table-striped">
+  <%= render partial: 'user_table_headers' %>
   <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.phone %></td>
-        <td><%= user.address %></td>
-        <td><%= user.salary %></td>
-        <td><%= user.company.name %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+    <%= render partial: 'users_table_item', collection: @admins, as: :user %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New User', new_user_path %>
+<h1>Employees</h1>
+
+<table class="table table-striped">
+  <%= render partial: 'user_table_headers' %>
+  <tbody>
+  <%= render partial: 'users_table_item', collection: @employees, as: :user %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '+ New User', new_user_path, class: 'btn btn-primary mb-5' %>
+
