@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @company.name %>
+</p>
+
+<p>
+  <strong>License number:</strong>
+  <%= @company.license_number %>
+</p>
+
+<p>
+  <strong>Started at:</strong>
+  <%= @company.started_at %>
+</p>
+
+<p>
+  <strong>Founder name:</strong>
+  <%= @company.founder_name %>
+</p>
+
+<p>
+  <strong>Contact:</strong>
+  <%= @company.contact %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @company.address %>
+</p>
+
+<%= link_to 'Edit', edit_company_path(@company) %> |
+<%= link_to 'Back', companies_path %>
