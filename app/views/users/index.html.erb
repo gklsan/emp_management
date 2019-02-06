@@ -11,6 +11,7 @@
       <th>Address</th>
       <th>Salary</th>
       <th>Bonus</th>
+      <th>company</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -23,7 +24,8 @@
         <td><%= user.phone %></td>
         <td><%= user.address %></td>
         <td><%= user.salary %></td>
-        <td><%= user.bonus %></td>
+        <td><%= user.company.name %></td>
+        <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :verify_is_admin?, only: [:index, :destroy]
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = current_user.company.users
   end
 
   # GET /users/1
@@ -71,5 +72,10 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :email, :phone, :address, :salary, :bonus)
+    end
+
+    def verify_is_admin?
+      has_admin_role = current_user.has_role?(:admin, current_user.company)
+      redirect_to current_user and return unless has_admin_role
     end
 end
