@@ -6,13 +6,12 @@
     <th>Record Type</th>
     <th>Changes</th>
   </thead>
-  <% PaperTrail::Version.all.reverse.each do |version| %>
-    <%#= binding.pry %>
+  <% @versions.reverse.each do |version| %>
     <tr>
       <td><%= version.created_at %></td>
       <td><%= version.event %></td>
       <td><%= version.item_type %></td>
-      <td><%= version.reify.changes %></td>
+      <td><%= version.reify&.changes || 'No data' %></td>
     </tr>
   <% end %>
 </table>

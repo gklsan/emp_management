@@ -27,7 +27,7 @@
     </tr>
     <tr>
       <td><strong>Company</strong></td>
-      <td><em><%= link_to "#{@user.company.name}", company_path(current_user.company) %></em></td>
+      <td><em><%= link_to "#{@user.company_name}", company_path(current_users_company) %></em></td>
     </tr>
     <tr>
       <td><strong>Department</strong></td>
@@ -37,6 +37,6 @@
 
   <%= link_to 'Edit Details', edit_user_path(@user), class: 'btn btn-primary' %>
   <% if current_user.has_admin_role? %>
-    <%= link_to 'Back', company_path(@user.company), class: 'btn btn-secondary' %>
+    <%= link_to 'Back', root_path, class: 'btn btn-secondary' %>
   <% end %>
 </div>

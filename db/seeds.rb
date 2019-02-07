@@ -1,3 +1,11 @@
+puts "Seeding started #{'*' * 10}"
+
+Department.destroy_all
+User.destroy_all
+Company.destroy_all
+PaperTrail::Version.destroy_all
+Role.destroy_all
+
 require 'date'
 
 def create_department
@@ -22,13 +30,13 @@ def create_user(type, i)
                         password: '123456',
                         phone: "445435233#{i}",
                         address: "USA - #{i}",
-                        salary: rand(1945) * i,
-                        bonus: rand(434) * i,
+                        salary: rand(19452) * i,
+                        bonus: rand(4342) * i,
                         company: company,
                         department: Department.all.sample
   )
   role = user.has_role?(type.to_sym, company)
-  puts "#{type}----- #{user.name} --- #{role.inspect} "
+  puts "Create: #{type}----- #{user.name} "
   user.add_role(type.to_sym, company) unless role
   puts user.roles.pluck(:name)
 end
@@ -38,12 +46,12 @@ create_department unless Department.first
 create_company unless Company.first
 unless User.first
   5.times do |i|
-    puts i
     create_user('admin', i + 1)
   end
 
   20.times do |i|
-    puts i
     create_user('employee', i + 1 )
   end
 end
+
+puts "Seeding completed #{'*' * 10}"

@@ -1,13 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :verify_is_admin?, only: [:index, :destroy]
 
   # GET /users
   # GET /users.json
   def index
-    @admins = User.with_role(:admin, current_user.company).preload(:roles)
-    @employees = User.with_role(:employee, current_user.company).preload(:roles)
+    @users = User.all
   end
 
   # GET /users/1
@@ -30,7 +28,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params.merge({password: '123456'}))
     respond_to do |format|
       if @user.save
-        @user.add_role(user_params[:role_type], current_user.company)
+        @user.set_role(user_params[:role_type], current_users_company)
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
@@ -45,11 +43,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        current_role = @user.roles_name.first
-        if current_role != user_params[:role_type]
-          @user.remove_role(current_role.to_sym, current_user.company)
-          @user.add_role(user_params[:role_type].to_sym, current_user.company)
-        end
+        update_role
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -80,8 +74,12 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :phone, :address, :salary, :bonus, :role_type, :department_id, :company_id)
   end
 
-  def verify_is_admin?
-    has_admin_role = current_user.has_role?(:admin, current_user.company)
-    redirect_to current_user and return unless has_admin_role
+  def update_role
+    current_role = @user.roles_name.first
+    if current_role != user_params[:role_type]
+      @user.remove_existing_role(current_role.to_sym, current_users_company)
+      @user.set_role(user_params[:role_type], current_users_company)
+    end
   end
+
 end

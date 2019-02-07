@@ -8,7 +8,8 @@ class CompaniesController < ApplicationController
   def index
     @company = current_users_company
     @users = User.includes(:roles).where(company: @company).order('roles.name, users.id')
-    @reports = User.find_by_sql(salary_report_sql)
+    @reports = User.find_by_sql(top_salary_report_sql)
+    @versions = PaperTrail::Version.all
   end
 
   # GET /companies/1
@@ -76,16 +77,12 @@ class CompaniesController < ApplicationController
     params.require(:company).permit(:name, :license_number, :started_at, :founder_name, :contact, :address)
   end
 
-  def current_users_company
-    current_user.company rescue nil
-  end
-
   def verify_is_admin?
-    has_admin_role = current_user.has_role?(:admin, current_user.company)
+    has_admin_role = current_user.has_role?(:admin, current_users_company)
     redirect_to current_user and return unless has_admin_role
   end
 
-  def salary_report_sql
+  def top_salary_report_sql
     sql = %Q( SELECT u1.name uname, d.name dname, salary, department_id FROM users u1
               INNER JOIN departments as d
               ON u1.department_id = d.Id

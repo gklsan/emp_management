@@ -1,11 +1,9 @@
 class User < ApplicationRecord
   rolify
   has_paper_trail
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
   attr_accessor :role_type
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, #:registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+
   belongs_to :company
   belongs_to :department
 
@@ -15,6 +13,22 @@ class User < ApplicationRecord
 
   def role_name
     roles_name.first
+  end
+
+  def department_name
+    department&.name
+  end
+
+  def company_name
+    company&.name
+  end
+
+  def set_role(role_type, company)
+    self.add_role(role_type.to_sym, company)
+  end
+
+  def remove_existing_role(role_type, company)
+    self.remove_role(role_type.to_sym, company)
   end
 
 end

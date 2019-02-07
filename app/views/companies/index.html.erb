@@ -1,4 +1,4 @@
-<h1 class="text-center"><%= link_to @company.name, company_path(@company), title: 'Click to view details' %></h1>
+<h1 class="text-center"><%= link_to @company.name.upcase, company_path(@company), title: 'Click to view details' %></h1>
 <%= render partial: 'companies/user_details', locals: {users: @users} %>
 <hr>
 <%= render partial: 'companies/report', locals: {report: @report} %>

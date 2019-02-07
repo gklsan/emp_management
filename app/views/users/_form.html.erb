@@ -40,7 +40,7 @@
     <%= form.select(:department_id, options_for_select(Department.all.pluck(:name, :id), @user.department_id), {}, {class: "form-control", disabled: !has_admin_role}) %>
   </div>
 
-  <%= form.hidden_field(:company_id, value: current_user.company.id) %>
+  <%= form.hidden_field(:company_id, value: current_users_company.id) %>
 
   <div class="actions mt-4 mb-5">
     <%= form.submit 'Submit', class: 'btn btn-primary' %>

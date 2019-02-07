@@ -16,7 +16,7 @@
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><%= user.role_name %></td>
-        <td><%= user.department.name %></td>
+        <td><%= user.department_name %></td>
         <td class="btn-group" role="group" >
           <%= link_to 'View', user, class: 'btn btn-primary' %>
           <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-secondary' %>
@@ -24,7 +24,6 @@
         </td>
       </tr>
     <% end %>
-    <%#= render partial: 'users/users_table_item', collection: @users, as: :user %>
   </tbody>
 </table>
 <%= link_to '+ New User', new_user_path, class: 'btn btn-primary mb-5' %>
