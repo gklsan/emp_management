@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   rolify
+  has_paper_trail
   attr_accessor :role_type
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

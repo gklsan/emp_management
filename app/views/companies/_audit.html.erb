@@ -1,0 +1,18 @@
+<h2>Recent Activities</h2>
+<table class="table">
+  <thead>
+    <th>Time</th>
+    <th>Event Type </th>
+    <th>Record Type</th>
+    <th>Changes</th>
+  </thead>
+  <% PaperTrail::Version.all.reverse.each do |version| %>
+    <%#= binding.pry %>
+    <tr>
+      <td><%= version.created_at %></td>
+      <td><%= version.event %></td>
+      <td><%= version.item_type %></td>
+      <td><%= version.reify.changes %></td>
+    </tr>
+  <% end %>
+</table>
