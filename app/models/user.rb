@@ -12,4 +12,8 @@ class User < ApplicationRecord
     roles_name.include?('admin')
   end
 
+  def role_name
+    roles_name.first
+  end
+
 end

@@ -1,25 +1,7 @@
 <h1 class="text-center"><%= link_to current_user.company.name, company_path(current_user.company) %></h1>
-<h1>Administrators</h1>
 
-<table class="table table-striped">
-  <%= render partial: 'user_table_headers' %>
-  <tbody>
-    <%= render partial: 'users_table_item', collection: @admins, as: :user %>
-  </tbody>
-</table>
 
 <br>
 
-<h1>Employees</h1>
 
-<table class="table table-striped">
-  <%= render partial: 'user_table_headers' %>
-  <tbody>
-  <%= render partial: 'users_table_item', collection: @employees, as: :user %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to '+ New User', new_user_path, class: 'btn btn-primary mb-5' %>
 

@@ -1,0 +1,21 @@
+<h2>Top Salaries Report Summary</h2>
+<div class="pb-5">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Department</th>
+      <th scope="col">Employee Name</th>
+      <th scope="col">Top Salaries</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @reports.each do |report| %>
+        <tr>
+          <td><%= report.dname %></td>
+          <td><%= report.uname %></td>
+          <td><%= report.salary %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

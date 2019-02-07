@@ -64,24 +64,24 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:name, :email, :phone, :address, :salary, :bonus, :role_type, :department_id, :company_id)
-    end
+  def set_user
+    @user = User.find_by(id: params[:id]) || current_user
+  end
 
-    def verify_is_admin?
-      has_admin_role = current_user.has_role?(:admin, current_user.company)
-      redirect_to current_user and return unless has_admin_role
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:name, :email, :phone, :address, :salary, :bonus, :role_type, :department_id, :company_id)
+  end
+
+  def verify_is_admin?
+    has_admin_role = current_user.has_role?(:admin, current_user.company)
+    redirect_to current_user and return unless has_admin_role
+  end
 end

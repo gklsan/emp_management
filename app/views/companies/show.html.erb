@@ -25,8 +25,8 @@
     <td> <%= @company.address %></td>
   </tr>
 </table>
+<%= link_to 'Back', root_path, class: 'btn btn-primary' %>
 
 <% if current_user.has_admin_role? %>
-  <%= link_to 'Edit', edit_company_path(@company), class: 'btn btn-primary' %>
+  <%= link_to 'Edit Dtails', edit_company_path(@company), class: 'btn btn-primary' %>
 <% end %>
-<%= link_to 'Back', root_path, class: 'btn btn-primary' %>
