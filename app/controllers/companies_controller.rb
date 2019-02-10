@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-  before_action :set_company, only: [:show, :edit, :update, :destroy]
+  before_action :set_company, only: %i[show edit update destroy]
   before_action :authenticate_user!
   before_action :verify_is_admin?, except: [:show]
 
@@ -14,8 +14,7 @@ class CompaniesController < ApplicationController
 
   # GET /companies/1
   # GET /companies/1.json
-  def show
-  end
+  def show; end
 
   # GET /companies/new
   def new
@@ -23,8 +22,7 @@ class CompaniesController < ApplicationController
   end
 
   # GET /companies/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /companies
   # POST /companies.json
@@ -67,6 +65,7 @@ class CompaniesController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_company
     @company = Company.find_by_id(params[:id]) || current_users_company
@@ -79,11 +78,11 @@ class CompaniesController < ApplicationController
 
   def verify_is_admin?
     has_admin_role = current_user.has_role?(:admin, current_users_company)
-    redirect_to current_user and return unless has_admin_role
+    redirect_to(current_user) && return unless has_admin_role
   end
 
   def top_salary_report_sql
-    sql = %Q( SELECT u1.name uname, d.name dname, salary, department_id FROM users u1
+    sql = %( SELECT u1.name uname, d.name dname, salary, department_id FROM users u1
               INNER JOIN departments as d
               ON u1.department_id = d.Id
               WHERE 3 > (
@@ -91,7 +90,8 @@ class CompaniesController < ApplicationController
                 FROM users u2
                 WHERE u2.salary > u1.salary
                 AND u1.department_id = u2.department_id
-              )
+                AND u2.company_id = #{current_users_company.id}
+              ) and company_id = #{current_users_company.id}
               ORDER BY d.name ASC, Salary DESC;
           )
   end

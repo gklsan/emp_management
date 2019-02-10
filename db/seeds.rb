@@ -28,15 +28,15 @@ def create_user(type, i)
   user ||= User.create!(name: "#{type} #{i}".humanize,
                         email: email,
                         password: '123456',
-                        phone: "445435233#{i}",
-                        address: "USA - #{i}",
-                        salary: rand(19452) * i,
-                        bonus: rand(4342) * i,
+                        phone: Faker::Number.number(10).to_s,
+                        address: Faker::Address.country,
+                        salary: rand(19453) * rand(10),
+                        bonus: rand(4342) * rand(6),
                         company: company,
                         department: Department.all.sample
   )
   role = user.has_role?(type.to_sym, company)
-  puts "Create: #{type}----- #{user.name} "
+  puts "Created user *#{user.name}* with  #{type} role"
   user.add_role(type.to_sym, company) unless role
   puts user.roles.pluck(:name)
 end
@@ -49,7 +49,7 @@ unless User.first
     create_user('admin', i + 1)
   end
 
-  20.times do |i|
+  50.times do |i|
     create_user('employee', i + 1 )
   end
 end

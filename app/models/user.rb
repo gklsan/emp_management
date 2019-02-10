@@ -7,6 +7,10 @@ class User < ApplicationRecord
   belongs_to :company
   belongs_to :department
 
+  validates :name, :salary, :bonus, presence: true
+  validates :phone, presence: true, length: { is: 10 }
+  validates :email, presence: true, format: { with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/ }
+
   def has_admin_role?
     roles_name.include?('admin')
   end
